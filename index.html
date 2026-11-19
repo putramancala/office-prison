@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Office Prison: Serving Time, Not Dreams. Streetwear untuk yang ingin menemukan kebebasan dari rutinitas.">
+<title>Office Prison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap">
+<style>
+/* Layout: header kaca dengan menu ringkas di HP; hero besar dengan foto miring bertape, tulisan hantu, stempel;
+   pita slogan sobek; katalog kartu bergaya hang tag; pita gelap Lost Generation sobek penuh lebar;
+   galeri close-up dengan lightbox; ukuran; cara pesan; FAQ; brand; kontak.
+   Palet brand: hitam, abu washed, putih kotor. Aksen tunggal: emas mahkota dari desain koala. */
+:root {
+  --bg: #0e0e0d;
+  --surface: #171715;
+  --surface-2: #232321;
+  --line: #36362f;
+  --fg: #ece6d9;
+  --muted: #a39e92;
+  --accent: #cfa84a;
+  --accent-ink: #16110a;
+  --band-bg: #2a2a26;
+  --band-fg: #ece6d9;
+  --band-accent: #cfa84a;
+  --font-display: "Rubik Dirt", "Impact", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #e9e4d8; --surface: #f3efe5; --surface-2: #dcd6c8; --line: #bdb7a8;
+    --fg: #121210; --muted: #5a574e; --accent: #7a5b12; --accent-ink: #ffffff;
+    --band-bg: #161614; --band-fg: #ece6d9; --band-accent: #cfa84a;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #e9e4d8; --surface: #f3efe5; --surface-2: #dcd6c8; --line: #bdb7a8;
+  --fg: #121210; --muted: #5a574e; --accent: #7a5b12; --accent-ink: #ffffff;
+  --band-bg: #161614; --band-fg: #ece6d9; --band-accent: #cfa84a;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.65;
+  padding-block: 0 40px;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+a { color: inherit; }
+button { font-family: inherit; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+.wrap {
+  width: 100%; max-width: 1192px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Grain film di seluruh halaman */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 20; pointer-events: none;
+  opacity: 0.22; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Layar pembuka */
+.loader { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: grid; place-items: center; animation: loaderOut 0.5s ease 1.25s both; }
+.loader-inner { display: grid; gap: 14px; justify-items: center; }
+.loader-brand { font-family: var(--font-display); font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1; }
+.loader-line { width: min(240px, 60vw); height: 3px; background: var(--line); overflow: hidden; }
+.loader-line i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; animation: fill 1.1s cubic-bezier(0.6, 0, 0.3, 1) both; }
+.loader-text { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+@keyframes loaderOut { to { opacity: 0; visibility: hidden; } }
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Kursor bintang */
+.cursor { position: fixed; left: -10px; top: -10px; width: 20px; height: 20px; z-index: 60; pointer-events: none; background: var(--accent); opacity: 0; transition: opacity 0.2s, scale 0.2s; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+.cursor.on { opacity: 0.95; }
+.cursor.big { scale: 2; }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 84%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 14px; flex-wrap: wrap; }
+.top::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; }
+@keyframes grow { to { transform: scaleX(1); } }
+@supports (animation-timeline: scroll()) {
+  .top::after { animation: grow linear both; animation-timeline: scroll(root); }
+}
+.brand { font-family: var(--font-display); font-size: 22px; text-decoration: none; letter-spacing: 0.01em; line-height: 1; }
+.brand sup { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+.menu { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.menu a { position: relative; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--muted); }
+.menu a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -5px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.25s ease; }
+.menu a:hover { color: var(--fg); }
+.menu a:hover::after { transform: scaleX(1); }
+.theme-btn, .menu-btn { font-family: var(--font-mono); font-size: 12px; background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.theme-btn:hover, .menu-btn:hover { color: var(--fg); border-color: var(--muted); }
+.menu-btn { display: none; color: var(--fg); letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; }
+
+/* Hero */
+.hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 56px; align-items: center; padding-block: 64px 64px; }
+.hero::before { content: ""; position: absolute; inset: -24px -16px; z-index: -1; pointer-events: none; background: radial-gradient(460px circle at var(--mx, 72%) var(--my, 28%), color-mix(in srgb, var(--accent) 17%, transparent), transparent 70%); }
+.ghost-wrap { position: absolute; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.ghost { position: absolute; left: -1%; bottom: -3%; font-family: var(--font-display); font-size: clamp(5rem, 21vw, 17rem); line-height: 0.85; white-space: nowrap; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) 16%, transparent); }
+@keyframes drift { to { transform: translateX(-14%); } }
+@supports (animation-timeline: scroll()) {
+  .ghost { animation: drift linear both; animation-timeline: scroll(root); animation-range: 0px 900px; }
+}
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+h1 { position: relative; font-family: var(--font-display); font-weight: 400; font-size: clamp(2.9rem, 8.2vw, 6.4rem); line-height: 0.98; letter-spacing: 0.005em; margin: 0 0 22px; text-wrap: balance; }
+.lead { color: var(--muted); font-size: 17px; max-width: 46ch; margin: 0 0 28px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; font-weight: 700; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; padding: 12px 22px; border-radius: 4px; border: 1px solid var(--fg); background: transparent; color: var(--fg); cursor: pointer; }
+.btn.primary { position: relative; overflow: hidden; background: var(--fg); color: var(--bg); }
+.btn.primary::after { content: ""; position: absolute; top: 0; left: -70%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent); transform: skewX(-20deg); transition: left 0.6s ease; }
+.btn.primary:hover::after { left: 130%; }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:not(.primary):hover { border-color: var(--accent); color: var(--accent); }
+.stamps { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 34px; }
+.stamp { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); border: 2px solid var(--accent); outline: 1px solid var(--accent); outline-offset: 2px; padding: 6px 12px; border-radius: 3px; rotate: -5deg; opacity: 0.92; }
+.stamp.alt { rotate: 3deg; color: var(--muted); border-color: var(--muted); outline-color: var(--muted); }
+
+@keyframes enter { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.hero-copy > * { animation: enter 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.hero-copy > :nth-child(2) { animation-delay: 0.1s; }
+.hero-copy > :nth-child(3) { animation-delay: 0.2s; }
+.hero-copy > :nth-child(4) { animation-delay: 0.3s; }
+.hero-copy > :nth-child(5) { animation-delay: 0.4s; }
+
+h1::before, h1::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+h1::before { color: var(--accent); animation: glitch-a 6.5s steps(1, end) 2.4s infinite; }
+h1::after { color: var(--muted); animation: glitch-b 6.5s steps(1, end) 2.6s infinite; }
+h1:hover::before, h1:hover::after { animation-duration: 1.2s; animation-delay: 0s; }
+@keyframes glitch-a {
+  0%, 88%, 100% { opacity: 0; }
+  89% { opacity: 1; clip-path: inset(10% 0 62% 0); transform: translate(-5px, 0); }
+  92% { opacity: 1; clip-path: inset(56% 0 14% 0); transform: translate(4px, 0); }
+  95% { opacity: 1; clip-path: inset(32% 0 40% 0); transform: translate(-3px, 0); }
+  98% { opacity: 1; clip-path: inset(80% 0 2% 0); transform: translate(3px, 0); }
+}
+@keyframes glitch-b {
+  0%, 88%, 100% { opacity: 0; }
+  90% { opacity: 0.8; clip-path: inset(40% 0 38% 0); transform: translate(5px, 0); }
+  93% { opacity: 0.8; clip-path: inset(6% 0 70% 0); transform: translate(-4px, 0); }
+  96% { opacity: 0.8; clip-path: inset(66% 0 10% 0); transform: translate(4px, 0); }
+}
+
+.duo { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; min-width: 0; padding: 14px 6px 10px; }
+.ph { position: relative; margin: 0; animation: enter 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both; }
+.ph img { width: 100%; aspect-ratio: 3 / 5; object-fit: cover; border-radius: 3px; background: var(--surface-2); box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.7); cursor: zoom-in; }
+.ph1 { rotate: -3deg; }
+.ph2 { rotate: 2.5deg; margin-top: 34px; animation-delay: 0.4s; }
+.ph::before { content: ""; position: absolute; z-index: 2; top: -11px; left: 50%; width: 86px; height: 22px; translate: -50% 0; rotate: -4deg; background: color-mix(in srgb, var(--fg) 42%, transparent); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
+.ph2::before { rotate: 5deg; }
+.badge { position: absolute; left: 50%; bottom: 44px; width: 112px; height: 112px; transform: translateX(-50%); z-index: 3; color: var(--fg); }
+.badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.badge .disc { fill: var(--bg); stroke: var(--line); }
+.badge text { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.03em; text-transform: uppercase; fill: currentColor; }
+.badge .ring { transform-origin: 50px 50px; animation: spin 24s linear infinite; }
+.badge .star { fill: var(--accent); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Pita slogan */
+.marquee { overflow: hidden; background: var(--accent); color: var(--accent-ink); }
+.marquee .track { display: flex; width: max-content; animation: slide 32s linear infinite; }
+.marquee:hover .track { animation-play-state: paused; }
+.marquee .group { display: flex; align-items: center; gap: 28px; flex-shrink: 0; padding: 18px 28px 18px 0; font-family: var(--font-display); font-size: clamp(1.1rem, 2.4vw, 1.5rem); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.marquee i { flex: none; width: 14px; height: 14px; background: currentColor; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* Section */
+section { padding-block: 72px; border-top: 1px solid var(--line); scroll-margin-top: 72px; }
+.marquee + .wrap section { border-top: 0; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 4.6vw, 3rem); line-height: 1.05; margin: 0 0 12px; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 56ch; margin: 0 0 32px; }
+
+/* Kartu produk ala hang tag */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; }
+.item { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; rotate: var(--r, 0deg); transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), rotate 0.3s, border-color 0.3s, box-shadow 0.3s; }
+.item:nth-child(odd) { --r: -0.5deg; }
+.item:nth-child(even) { --r: 0.5deg; }
+.item::before { content: ""; position: absolute; top: 12px; right: 12px; z-index: 3; width: 13px; height: 13px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45); }
+.item:hover { transform: translateY(-5px); rotate: 0deg; border-color: var(--accent); box-shadow: 0 16px 34px -16px color-mix(in srgb, var(--accent) 55%, transparent); }
+.pic { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--surface-2); }
+.pic img { position: absolute; inset: 0; width: 100%; height: 100%; cursor: zoom-in; transform-origin: var(--ox, 50%) var(--oy, 50%); transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.pic img[hidden] { display: none; }
+.item:hover .pic img { transform: scale(1.12); }
+.side { position: absolute; left: 10px; bottom: 10px; z-index: 2; display: flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.side button { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; border: 0; background: transparent; color: var(--muted); padding: 3px 11px; border-radius: 999px; cursor: pointer; }
+.side button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.stat { position: absolute; top: 10px; left: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
+.stat::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4fae6e; }
+.stat-preorder::before { background: var(--accent); }
+.stat-soldout::before { background: var(--muted); }
+.stat-soldout { color: var(--muted); }
+.is-soldout .pic img { filter: grayscale(1); opacity: 0.5; }
+.is-soldout .pic::after { content: "Sold out"; position: absolute; z-index: 2; top: 44%; left: 50%; translate: -50% -50%; rotate: -13deg; font-family: var(--font-display); font-size: 2.1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border: 3px solid var(--accent); padding: 2px 14px; white-space: nowrap; pointer-events: none; }
+.info { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.info .line { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+.info h3 { font-size: 18px; margin: 0; line-height: 1.25; font-weight: 700; }
+.info p { margin: 0; font-size: 14px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips span { font-family: var(--font-mono); font-size: 11px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); }
+.eta { font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin: 0; }
+.sizes { display: flex; flex-wrap: wrap; gap: 6px; }
+.size { font-family: var(--font-mono); font-size: 13px; min-width: 42px; padding: 6px 0; text-align: center; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.size:hover:not(:disabled) { border-color: var(--accent); }
+.size[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.size:disabled { color: var(--muted); text-decoration: line-through; cursor: not-allowed; opacity: 0.55; }
+.size-meta { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; min-height: 18px; }
+.size-meta .hint { color: var(--accent); font-weight: 500; }
+.size-meta a { color: var(--muted); margin-left: auto; }
+.tagrow { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+.barcode { width: 64px; height: 16px; background: repeating-linear-gradient(90deg, var(--fg) 0 1px, transparent 1px 3px, var(--fg) 3px 5px, transparent 5px 6px, var(--fg) 6px 7px, transparent 7px 10px); opacity: 0.8; }
+.price { font-family: var(--font-mono); font-size: 17px; font-weight: 500; }
+.is-soldout .price { text-decoration: line-through; color: var(--muted); }
+.order { display: block; text-align: center; font-weight: 700; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; padding: 11px 12px; border-radius: 4px; background: var(--fg); color: var(--bg); border: 1px solid var(--fg); transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.order:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.is-soldout .order { background: transparent; color: var(--fg); }
+button.order { width: 100%; font-family: inherit; cursor: pointer; }
+.ask { text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+.ask:hover { text-decoration: underline; }
+@keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+.shake { animation: shake 0.3s 2; }
+
+/* Pita gelap Lost Generation */
+.lost { background: var(--band-bg); color: var(--band-fg); border-top: 0; padding-block: 110px; }
+.lost .eyebrow { color: var(--band-accent); }
+.mega { font-size: clamp(3.4rem, 13vw, 9.5rem); line-height: 0.9; margin-bottom: 44px; }
+.story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.story > figure { margin: 0; rotate: -2deg; position: relative; }
+.story > figure::before { content: ""; position: absolute; z-index: 2; top: -11px; left: 50%; width: 90px; height: 22px; translate: -50% 0; rotate: 3deg; background: color-mix(in srgb, var(--band-fg) 40%, transparent); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); }
+.story img { width: 100%; height: auto; border-radius: 3px; cursor: zoom-in; }
+.story blockquote { margin: 0 0 20px; font-family: var(--font-display); font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.2; text-wrap: balance; }
+.story p { color: color-mix(in srgb, var(--band-fg) 72%, transparent); margin: 0 0 20px; max-width: 48ch; }
+.story .stack { display: grid; gap: 16px; min-width: 0; }
+.story .stack img { border: 1px solid color-mix(in srgb, var(--band-fg) 20%, transparent); }
+.w { display: inline-block; }
+@keyframes wordin { from { opacity: 0.12; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+  .w { animation: wordin linear both; animation-timeline: view(); animation-range: entry calc(var(--i) * 1.2%) entry calc(45% + var(--i) * 1.2%); }
+}
+
+/* Galeri close-up */
+.gallery { columns: 4 200px; column-gap: 14px; margin-bottom: 8px; }
+.gallery figure { margin: 0 0 14px; break-inside: avoid; }
+.gallery img { width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--line); cursor: zoom-in; transition: filter 0.3s; }
+.gallery figure:hover img { filter: contrast(1.08) brightness(1.06); }
+.gallery figcaption { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; margin-top: 36px; }
+.cols h3 { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+.cols p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.figure { margin: 0; }
+.figure img { width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--line); cursor: zoom-in; }
+.figure figcaption { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 460px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 12px 16px; font-size: 15px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); background: var(--surface-2); }
+tr:last-child td { border-bottom: 0; }
+.note { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; counter-reset: s; }
+.steps li { counter-increment: s; padding-top: 14px; border-top: 2px solid var(--accent); }
+.steps li::before { content: "0" counter(s); font-family: var(--font-mono); color: var(--accent); font-size: 14px; display: block; margin-bottom: 4px; }
+.steps strong { display: block; }
+.steps span { color: var(--muted); font-size: 15px; }
+
+details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--accent); font-size: 20px; line-height: 1; }
+details[open] summary::after { content: "−"; }
+details p { margin: 10px 0 0; color: var(--muted); max-width: 70ch; }
+
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.contact p { color: var(--muted); margin: 0 0 18px; max-width: 44ch; }
+.wa { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wa code { font-family: var(--font-mono); font-size: 16px; background: var(--surface); border: 1px solid var(--line); padding: 10px 14px; border-radius: 4px; user-select: all; }
+.rows a { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+.rows a span:last-child { font-family: var(--font-mono); color: var(--muted); font-size: 13px; }
+.rows a:hover span:first-child { color: var(--accent); }
+
+footer { border-top: 1px solid var(--line); padding-top: 20px; font-family: var(--font-mono); color: var(--muted); font-size: 12px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* Lightbox */
+.lightbox { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; background: rgba(8, 8, 7, 0.9); padding: max(20px, env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); cursor: zoom-out; }
+.lightbox img { max-width: min(94vw, 1100px); max-height: 86vh; width: auto; height: auto; border-radius: 4px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6); }
+.lb-close { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(236, 230, 217, 0.4); background: rgba(14, 14, 13, 0.7); color: #ece6d9; font-size: 24px; line-height: 1; cursor: pointer; }
+
+/* Efek: muncul saat di-scroll (hanya di browser yang mendukung) */
+@keyframes rise { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+@keyframes unredact { to { transform: scaleX(0); } }
+@supports (animation-timeline: view()) {
+  section .eyebrow, .sub, .grid, .gallery, .story > figure, .figure, .cols > div, .steps li, .table-wrap, details, .contact > * {
+    animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 65%;
+  }
+  section h2 { position: relative; width: fit-content; max-width: 100%; }
+  section h2::after { content: ""; position: absolute; inset: 0.08em -6px; background: var(--fg); transform-origin: 100% 50%; animation: unredact linear both; animation-timeline: view(); animation-range: entry 10% entry 75%; }
+  .lost h2::after { background: var(--band-fg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .theme-anim, .theme-anim * { transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, fill 0.45s ease !important; }
+}
+
+@media (max-width: 800px) {
+  .hero, .story, .contact { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .hero { padding-block: 40px 40px; }
+  section { padding-block: 48px; }
+  .lost { padding-block: 80px; }
+  .badge { width: 92px; height: 92px; bottom: 36px; }
+  .menu-btn { display: inline-block; }
+  .menu { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 16px; padding-block: 12px 6px; }
+  .menu.open { display: flex; }
+  .gallery { columns: 2 140px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .loader, .cursor, section h2::after { display: none !important; }
+  .marquee .group + .group { display: none; }
+}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <span class="loader-brand">OFFICE PRISON</span>
+    <span class="loader-line"><i></i></span>
+    <span class="loader-text">Clocking in…</span>
+  </div>
+</div>
+<script>try { if (sessionStorage.getItem("op-seen")) { document.getElementById("loader").style.display = "none"; } else { sessionStorage.setItem("op-seen", "1"); } } catch (e) {}</script>
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#atas">OFFICE PRISON<sup>®</sup></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="menu" id="menu" aria-label="Navigasi utama">
+      <a href="#koleksi">Koleksi</a>
+      <a href="#lost">Lost Generation</a>
+      <a href="#detail">Detail</a>
+      <a href="#ukuran">Ukuran</a>
+      <a href="#pesan">Cara pesan</a>
+      <a href="#tanya">FAQ</a>
+      <button class="theme-btn" id="themeBtn" type="button">Ganti tema</button>
+    </nav>
+  </div>
+</header>
+
+<main id="atas">
+  <div class="wrap">
+    <div class="hero">
+      <div class="ghost-wrap" aria-hidden="true"><div class="ghost">Serving Time</div></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Streetwear brand · Est. 2025</p>
+        <h1 data-text="Serving Time, Not Dreams.">Serving Time, Not Dreams.</h1>
+        <p class="lead">Office Prison menggambarkan seseorang yang merasa terjebak dalam rutinitas dan ingin menemukan kebebasannya. Kaos oversize dengan sablon vintage, dibuat untuk dipakai di hari biasa dan hari Senin berikutnya.</p>
+        <div class="cta">
+          <a class="btn primary" href="#koleksi">Lihat koleksi</a>
+          <a class="btn" href="#pesan">Cara pesan</a>
+        </div>
+        <div class="stamps" aria-hidden="true"><span class="stamp">Inmate No. 2025</span><span class="stamp alt">Work · Consume · Repeat</span></div>
+      </div>
+      <div class="duo">
+        <div class="badge" aria-hidden="true"><svg viewBox="0 0 100 100"><circle class="disc" cx="50" cy="50" r="49"/><defs><path id="ringPath" d="M50 50 m-37 0 a37 37 0 1 1 74 0 a37 37 0 1 1 -74 0"/></defs><g class="ring"><text><textPath href="#ringPath">Serving Time • Not Dreams • Est. 2025 •</textPath></text></g><path class="star" d="M50 38 L53.2 46.8 L62 50 L53.2 53.2 L50 62 L46.8 53.2 L38 50 L46.8 46.8 Z"/></svg></div>
+        <figure class="ph ph1"><img src="img/white-front.jpg" alt="Model memakai kaos oversize putih Office Prison tampak depan"></figure>
+        <figure class="ph ph2"><img src="img/white-back.jpg" alt="Kaos oversize putih Office Prison tampak belakang dengan sablon besar"></figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" data-torn="6">
+    <div class="track">
+      <div class="group"><span>Work</span><i></i><span>Consume</span><i></i><span>Repeat</span><i></i><span>Serving Time</span><i></i><span>Not Dreams</span><i></i></div>
+      <div class="group" aria-hidden="true"><span>Work</span><i></i><span>Consume</span><i></i><span>Repeat</span><i></i><span>Serving Time</span><i></i><span>Not Dreams</span><i></i></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="koleksi">
+      <p class="eyebrow">Koleksi</p>
+      <h2>Semua kaos</h2>
+      <p class="sub">Pilih depan atau belakang untuk melihat sablonnya, pilih ukuran, lalu pesan lewat WhatsApp. Nama, harga, ukuran, dan status stok di bawah ini contoh, silakan ganti dengan data aslimu.</p>
+      <div class="grid" id="grid"></div>
+    </section>
+  </div>
+
+  <section id="lost" class="lost" data-torn="10">
+    <div class="wrap">
+      <p class="eyebrow">Lost Generation</p>
+      <h2 class="mega">Lost<br>Generation</h2>
+      <div class="story">
+        <figure><img src="img/lost-art.jpg" alt="Ilustrasi Lost Generation: anak duduk bertopang dagu dengan papan petunjuk Dream, Work, Happiness, Future" loading="lazy"></figure>
+        <div>
+          <blockquote class="words">Born with big dreams, growing up in a system that only teaches us to work. Not to live.</blockquote>
+          <p>Tulis cerita koleksi ini dengan kata-katamu: dari mana idenya datang, siapa yang kamu bayangkan memakainya, dan apa yang ingin kamu sampaikan lewat sablonnya.</p>
+          <div class="stack">
+            <img src="img/lost-tees.jpg" alt="Kaos hitam washed Lost Generation tampak depan dan belakang" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section id="detail">
+      <p class="eyebrow">Detail produk</p>
+      <h2>Dibuat untuk dipakai sungguhan</h2>
+      <p class="sub">Ketuk foto untuk melihatnya lebih besar.</p>
+      <div class="gallery">
+        <figure><img src="img/cu-white-print.jpg" alt="Close-up sablon punggung kaos putih Work. Obey. Repeat." loading="lazy"><figcaption>Sablon punggung</figcaption></figure>
+        <figure><img src="img/cu-grey-label.jpg" alt="Close-up label leher OP pada kaos washed grey" loading="lazy"><figcaption>Label leher</figcaption></figure>
+        <figure><img src="img/cu-koala-face.jpg" alt="Close-up sablon koala lelah pada kaos washed black" loading="lazy"><figcaption>Sablon koala</figcaption></figure>
+        <figure><img src="img/cu-grey-seam.jpg" alt="Close-up jahitan bahu kaos washed grey" loading="lazy"><figcaption>Jahitan bahu</figcaption></figure>
+        <figure><img src="img/cu-white-label.jpg" alt="Close-up label Office Prison di ujung lengan kaos putih" loading="lazy"><figcaption>Label lengan</figcaption></figure>
+        <figure><img src="img/cu-koala-mug.jpg" alt="Close-up cangkir Good Luck dan tulisan Just another day in the office" loading="lazy"><figcaption>Detail ilustrasi</figcaption></figure>
+        <figure><img src="img/cu-grey-fabric.jpg" alt="Close-up tekstur kain washed grey" loading="lazy"><figcaption>Tekstur kain</figcaption></figure>
+      </div>
+      <div class="cols">
+        <div><h3>Bahan</h3><p>100% katun. Ganti dengan gramasi dan jenis katun yang kamu pakai, misalnya combed 20s atau 24s.</p></div>
+        <div><h3>Potongan</h3><p>Oversized fit, bahu turun, lengan longgar. Cocok dipakai santai atau dilapis jaket.</p></div>
+        <div><h3>Sablon</h3><p>Vintage screen print dengan tampilan retak halus yang menyatu dengan kain.</p></div>
+        <div><h3>Warna</h3><p>Washed grey dengan garment dye. Tiap potong punya tone sedikit berbeda, itu bagian dari karakternya.</p></div>
+      </div>
+    </section>
+
+    <section id="ukuran">
+      <p class="eyebrow">Panduan ukuran</p>
+      <h2>Cari ukuran yang pas</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ukuran</th><th>Lebar dada</th><th>Panjang baju</th><th>Berat badan</th></tr></thead>
+          <tbody>
+            <tr><td>S</td><td>56 cm</td><td>68 cm</td><td>45 – 55 kg</td></tr>
+            <tr><td>M</td><td>58 cm</td><td>70 cm</td><td>55 – 65 kg</td></tr>
+            <tr><td>L</td><td>60 cm</td><td>72 cm</td><td>65 – 75 kg</td></tr>
+            <tr><td>XL</td><td>62 cm</td><td>74 cm</td><td>75 – 85 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Angka di atas contoh untuk potongan oversize. Ganti dengan hasil ukur produkmu. Toleransi ukuran 1 – 2 cm.</p>
+    </section>
+
+    <section id="pesan">
+      <p class="eyebrow">Cara pesan</p>
+      <h2>Empat langkah, tanpa ribet</h2>
+      <ol class="steps">
+        <li><strong>Pilih kaos</strong><span>Tentukan desain dan ukuran dari katalog di atas.</span></li>
+        <li><strong>Chat WhatsApp</strong><span>Kirim pesanan dan alamat lengkap. Kami konfirmasi stok dan total harga.</span></li>
+        <li><strong>Bayar</strong><span>Transfer atau e-wallet, lalu kirim bukti bayar lewat chat.</span></li>
+        <li><strong>Pesanan dikirim</strong><span>Barang dikemas dan dikirim, nomor resi kami kirim lewat chat.</span></li>
+      </ol>
+    </section>
+
+    <section id="tanya">
+      <p class="eyebrow">FAQ</p>
+      <h2>Pertanyaan yang sering muncul</h2>
+      <details open><summary>Apakah bisa tukar ukuran?</summary><p>Contoh jawaban: bisa, selama kaos belum dicuci dan label masih terpasang, maksimal 3 hari setelah barang diterima.</p></details>
+      <details><summary>Apakah sablonnya tahan dicuci?</summary><p>Contoh jawaban: tahan. Cuci dengan air dingin, balik kaos sebelum dicuci, dan jangan setrika langsung di atas sablon.</p></details>
+      <details><summary>Berapa lama pengiriman?</summary><p>Contoh jawaban: pesanan diproses 1 – 2 hari kerja, lalu 2 – 5 hari tergantung kota tujuan.</p></details>
+      <details><summary>Apakah ada pembelian grosir?</summary><p>Contoh jawaban: ada, minimal 12 pcs untuk harga khusus. Hubungi kami lewat WhatsApp.</p></details>
+    </section>
+
+    <section id="brand">
+      <p class="eyebrow">Tentang brand</p>
+      <h2>Office Prison®</h2>
+      <p class="sub">Serving Time, Not Dreams. Brand ini menggambarkan seseorang yang merasa terjebak dalam rutinitas dan ingin menemukan kebebasannya. Work is a prison, but style is freedom.</p>
+      <figure class="figure">
+        <img src="img/brand-board.jpg" alt="Papan identitas brand Office Prison: logo, variasi logo, simbol, pilihan tagline, dan arah warna" loading="lazy">
+        <figcaption>Identitas brand: hitam, washed grey, putih kotor</figcaption>
+      </figure>
+    </section>
+
+    <section id="kontak">
+      <p class="eyebrow">Kontak</p>
+      <h2>Tanya atau pesan sekarang</h2>
+      <div class="contact">
+        <div>
+          <p>Balasan biasanya kurang dari 1 jam pada jam kerja, pukul 09.00 – 20.00 WIB.</p>
+          <div class="wa">
+            <code id="waText">0812-3456-7890</code>
+            <button class="btn" id="copyBtn" type="button">Salin nomor</button>
+          </div>
+        </div>
+        <div class="rows">
+          <a href="https://wa.me/6281234567890"><span>WhatsApp</span><span>Chat sekarang</span></a>
+          <a href="https://www.instagram.com/officeprison"><span>Instagram</span><span>@officeprison</span></a>
+          <a href="https://www.tiktok.com/@officeprison"><span>TikTok</span><span>@officeprison</span></a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2025 OFFICE PRISON®</span>
+      <span>Work • Consume • Repeat</span>
+    </footer>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Foto diperbesar">
+  <button class="lb-close" id="lbClose" type="button" aria-label="Tutup">×</button>
+  <img id="lbImg" alt="">
+</div>
+
+<script>
+(function () {
+  var WA_NUMBER = "6281234567890";
+  function waLink(name, status, size, ask) {
+    var t;
+    if (ask) t = "Halo, saya mau tanya kaos " + name + ".";
+    else if (status === "soldout") t = "Halo, kabari saya kalau kaos " + name + " ready lagi.";
+    else t = "Halo, saya mau " + (status === "preorder" ? "pre-order" : "pesan") + " kaos " + name + " ukuran " + size + ".";
+    return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(t);
+  }
+  var SIZES = ["S", "M", "L", "XL"];
+  var PRODUCTS = [
+    { name: "No Direction. Just Exist. (Krem)", line: "Lost Generation · Oversize Tee", price: 159000, front: "img/p1-front.jpg", back: "img/p1-back.jpg", bg: "#4a3a2c",
+      desc: "Logo kecil di dada, ilustrasi besar anak bertopang dagu dengan papan petunjuk di punggung.", chips: ["Krem", "Oversize"], sizes: SIZES, status: "ready" },
+    { name: "Escape Plan: ?", line: "Office Prison · Oversize Tee", price: 159000, front: "img/p2-front.jpg", back: "img/p2-back.jpg", bg: "#4a3a2c",
+      desc: "Logo garis jeruji di dada, siluet jendela dan cap merah \"Escape Plan: ?\" di punggung.", chips: ["Krem", "Oversize"], sizes: SIZES, status: "ready" },
+    { name: "No Direction. Just Exist. (Washed)", line: "Lost Generation · Washed Tee", price: 169000, front: "img/p3-front.jpg", back: "img/p3-back.jpg", bg: "#3a2f26",
+      desc: "Charcoal washed, logo kecil di dada, ilustrasi besar di punggung.", chips: ["Washed charcoal", "Oversize"], sizes: SIZES, sold: ["XL"], status: "ready" },
+    { name: "Same Office. Different Prison.", line: "Office Prison · Washed Tee", price: 169000, front: "img/p4-front.jpg", back: "img/p4-back.jpg", bg: "#3a2f26",
+      desc: "Sablon gedung kantor di depan, barisan meja kerja di belakang.", chips: ["Washed grey", "Oversize"], sizes: SIZES, status: "preorder", eta: "± 14 hari" },
+    { name: "Monday Again?", line: "Office Prison · Washed Tee", price: 159000, front: "img/p5-front.jpg", back: "img/p5-back.jpg", bg: "#3a2f26",
+      desc: "Koala lelah di meja kerja depan, logo mahkota di punggung atas.", chips: ["Washed black", "Oversize"], sizes: SIZES, status: "ready" },
+    { name: "Work \u00b7 Consume \u00b7 Repeat", line: "Office Prison · Layered Tee", price: 179000, front: "img/p6-front.jpg", back: "img/p6-back.jpg", bg: "#4a3a2c",
+      desc: "Anjing santai membawa kopi di depan, lengan panjang biru berlapis di bawah kaos krem.", chips: ["Krem & biru", "Layered"], sizes: SIZES, status: "soldout" }
+  ];
+  function rupiah(n) { return "Rp " + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+  var grid = document.getElementById("grid");
+  PRODUCTS.forEach(function (p, idx) {
+    var el = document.createElement("article");
+    el.className = "item";
+    var fit = "object-fit:cover;object-position:50% 45%;";
+    var imgs = '<img data-zoom data-side="front" src="' + p.front + '" alt="' + esc(p.name) + ', tampak depan" style="' + fit + '" loading="lazy">';
+    var toggle = "";
+    if (p.back) {
+      imgs += '<img data-zoom data-side="back" src="' + p.back + '" alt="' + esc(p.name) + ', tampak belakang" style="' + fit + '" loading="lazy" hidden>';
+      toggle = '<div class="side"><button type="button" data-side="front" aria-pressed="true">Depan</button><button type="button" data-side="back" aria-pressed="false">Belakang</button></div>';
+    }
+    var st = p.status || "ready";
+    var badgeText = st === "preorder" ? "Pre-order" : st === "soldout" ? "Sold out" : "Ready";
+    var sizeHtml = "";
+    if (st !== "soldout") {
+      sizeHtml = '<div class="sizes" role="group" aria-label="Pilih ukuran">' + p.sizes.map(function (s) {
+        var out = (p.sold || []).indexOf(s) > -1;
+        return '<button type="button" class="size" data-size="' + s + '"' + (out ? ' disabled aria-label="Ukuran ' + s + ' habis"' : '') + ' aria-pressed="false">' + s + '</button>';
+      }).join("") + '</div>' +
+      '<div class="size-meta"><span class="hint" aria-live="polite"></span><a href="#ukuran">Panduan ukuran</a></div>';
+    }
+    var eta = st === "preorder" ? '<p class="eta">Pre-order · estimasi kirim ' + esc(p.eta || "") + '</p>' : "";
+    var cta = st === "soldout" ? "Kabari saya saat ready" : st === "preorder" ? "Pre-order via WhatsApp" : "Pesan via WhatsApp";
+    var serial = "No. " + String(idx + 1).padStart(3, "0");
+    el.dataset.name = p.name;
+    el.dataset.status = st;
+    el.dataset.size = "";
+    if (st === "soldout") el.classList.add("is-soldout");
+    el.innerHTML =
+      '<div class="pic" style="background:' + p.bg + '">' + imgs + '<span class="stat stat-' + st + '">' + badgeText + '</span>' + toggle + '</div>' +
+      '<div class="info">' +
+        '<span class="line">' + esc(p.line) + '</span>' +
+        '<h3>' + esc(p.name) + '</h3>' +
+        '<p>' + esc(p.desc) + '</p>' +
+        '<div class="chips">' + p.chips.map(function (c) { return "<span>" + esc(c) + "</span>"; }).join("") + '</div>' +
+        eta +
+        sizeHtml +
+        '<div class="tagrow"><span>' + serial + '</span><span class="barcode" aria-hidden="true"></span></div>' +
+        '<div class="price">' + rupiah(p.price) + '</div>' +
+        (st === "soldout" ? '<a class="order" target="_blank" rel="noopener" href="' + waLink(p.name, st, "") + '">' + cta + '</a>' : '<button type="button" class="order">' + cta + '</button>') +
+        '<a class="ask" target="_blank" rel="noopener" href="' + waLink(p.name, st, "", true) + '">Tanya dulu →</a>' +
+      '</div>';
+    grid.appendChild(el);
+  });
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest(".side button");
+    if (!b) return;
+    var pic = b.closest(".pic");
+    Array.prototype.forEach.call(pic.querySelectorAll("img"), function (im) { im.hidden = im.dataset.side !== b.dataset.side; });
+    Array.prototype.forEach.call(pic.querySelectorAll(".side button"), function (x) { x.setAttribute("aria-pressed", x === b); });
+  });
+  grid.addEventListener("click", function (e) {
+    var sz = e.target.closest(".size");
+    if (sz && !sz.disabled) {
+      var card = sz.closest(".item");
+      Array.prototype.forEach.call(card.querySelectorAll(".size"), function (x) { x.setAttribute("aria-pressed", x === sz); });
+      card.dataset.size = sz.dataset.size;
+      var hint = card.querySelector(".hint");
+      if (hint) hint.textContent = "";
+      var o = card.querySelector(".order");
+      if (o.tagName === "BUTTON") {
+        var a = document.createElement("a");
+        a.className = "order"; a.target = "_blank"; a.rel = "noopener"; a.textContent = o.textContent;
+        o.replaceWith(a);
+        o = a;
+      }
+      o.href = waLink(card.dataset.name, card.dataset.status, sz.dataset.size);
+      return;
+    }
+    var ord = e.target.closest(".order");
+    if (ord) {
+      var c = ord.closest(".item");
+      if (c.dataset.status !== "soldout" && !c.dataset.size) {
+        e.preventDefault();
+        var h = c.querySelector(".hint");
+        if (h) h.textContent = "Pilih ukuran dulu";
+        var s = c.querySelector(".sizes");
+        if (s) { s.classList.remove("shake"); void s.offsetWidth; s.classList.add("shake"); }
+      }
+    }
+  });
+  grid.addEventListener("pointermove", function (e) {
+    var pic = e.target.closest(".pic");
+    if (!pic) return;
+    var r = pic.getBoundingClientRect();
+    pic.style.setProperty("--ox", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%");
+    pic.style.setProperty("--oy", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
+  });
+
+  /* Tepi sobek */
+  function tornPoly(amp, seed) {
+    var N = 70, pts = [], s = seed, i;
+    function r() { s = (s * 16807) % 2147483647; return (s % 1000) / 1000; }
+    for (i = 0; i <= N; i++) pts.push((i / N * 100).toFixed(2) + "% " + (r() * amp).toFixed(1) + "px");
+    for (i = N; i >= 0; i--) pts.push((i / N * 100).toFixed(2) + "% calc(100% - " + (r() * amp).toFixed(1) + "px)");
+    return "polygon(" + pts.join(",") + ")";
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-torn]"), function (el, i) {
+    el.style.clipPath = tornPoly(parseFloat(el.dataset.torn) || 8, 1234 + i * 977);
+  });
+
+  /* Kata demi kata untuk kutipan */
+  Array.prototype.forEach.call(document.querySelectorAll(".words"), function (el) {
+    var text = el.textContent.trim();
+    el.setAttribute("aria-label", text);
+    el.innerHTML = text.split(/\s+/).map(function (w, i) { return '<span class="w" aria-hidden="true" style="--i:' + i + '">' + esc(w) + "</span>"; }).join(" ");
+  });
+
+  /* Menu ringkas di HP */
+  var menu = document.getElementById("menu");
+  var menuBtn = document.getElementById("menuBtn");
+  menuBtn.addEventListener("click", function () {
+    var open = menu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open);
+  });
+  menu.addEventListener("click", function (e) {
+    if (e.target.closest("a")) { menu.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }
+  });
+
+  /* Lightbox */
+  var lb = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lbImg");
+  function closeLb() { lb.hidden = true; lbImg.removeAttribute("src"); }
+  document.addEventListener("click", function (e) {
+    var z = e.target.closest("img[data-zoom], .ph img, .gallery img, .story img, .figure img");
+    if (z && !lb.contains(z)) {
+      lbImg.src = z.currentSrc || z.src;
+      lbImg.alt = z.alt || "";
+      lb.hidden = false;
+      document.getElementById("lbClose").focus();
+    }
+  });
+  lb.addEventListener("click", closeLb);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+
+  /* Kursor bintang */
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var cur = document.createElement("div");
+    cur.className = "cursor";
+    cur.setAttribute("aria-hidden", "true");
+    document.body.appendChild(cur);
+    var tx = -100, ty = -100, cx = -100, cy = -100;
+    window.addEventListener("pointermove", function (e) { tx = e.clientX; ty = e.clientY; cur.classList.add("on"); });
+    document.addEventListener("pointerover", function (e) { cur.classList.toggle("big", !!e.target.closest("a, button, summary, img")); });
+    document.documentElement.addEventListener("mouseleave", function () { cur.classList.remove("on"); });
+    (function loop() {
+      cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
+      cur.style.translate = cx.toFixed(1) + "px " + cy.toFixed(1) + "px";
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* Cahaya hero */
+  var hero = document.querySelector(".hero");
+  if (hero && window.matchMedia("(hover: hover)").matches) {
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect();
+      hero.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      hero.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  }
+
+  var root = document.documentElement;
+  document.getElementById("themeBtn").addEventListener("click", function () {
+    var cur2 = root.getAttribute("data-theme") || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    root.classList.add("theme-anim");
+    root.setAttribute("data-theme", cur2 === "dark" ? "light" : "dark");
+    setTimeout(function () { root.classList.remove("theme-anim"); }, 600);
+  });
+
+  var copyBtn = document.getElementById("copyBtn");
+  var waEl = document.getElementById("waText");
+  copyBtn.addEventListener("click", function () {
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(waEl);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyBtn.textContent = "Nomor terpilih";
+    }
+    try {
+      navigator.clipboard.writeText(waEl.textContent).then(function () {
+        copyBtn.textContent = "Tersalin";
+        setTimeout(function () { copyBtn.textContent = "Salin nomor"; }, 1800);
+      }, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
