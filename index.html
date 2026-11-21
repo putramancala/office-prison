@@ -196,7 +196,7 @@ h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 
 .rack { display: flex; gap: clamp(6px, 1.6vw, 22px); align-items: flex-start; list-style: none; margin: 0; padding: 0 0 54px; }
 .rk { flex: 1 1 0; min-width: 0; transition: flex-grow 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .rk.on { flex-grow: 2.7; }
-.rk-btn { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; transform-origin: var(--hx, 50%) 0; animation: sway 6.5s ease-in-out infinite alternate; animation-delay: calc(var(--i, 0) * -1.7s); }
+.rk-btn { -webkit-user-select: none; user-select: none; touch-action: manipulation; display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; transform-origin: var(--hx, 50%) 0; animation: sway 6.5s ease-in-out infinite alternate; animation-delay: calc(var(--i, 0) * -1.7s); }
 .rk-btn:hover, .rk-btn:focus-visible { animation-play-state: paused; }
 @keyframes sway { from { rotate: -1.3deg; } to { rotate: 1.3deg; } }
 .wire { display: block; position: relative; height: clamp(24px, 3.6vw, 40px); }
@@ -259,32 +259,6 @@ h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 
 .ask:hover { text-decoration: underline; }
 @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 .shake { animation: shake 0.3s 2; }
-
-/* Coba pakai */
-.tryon { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; margin-top: 8px; }
-.stage { position: relative; width: 100%; max-width: 520px; aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); overflow: hidden; user-select: none; -webkit-user-select: none; }
-.stage .sil { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--line); }
-.stage .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.stage .tee { position: absolute; left: 50%; top: 50%; width: 60%; height: auto; max-width: none; cursor: grab; touch-action: none; filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.25)); -webkit-user-drag: none; }
-.stage .tee:active { cursor: grabbing; }
-.stage .hint { position: absolute; left: 10px; bottom: 10px; right: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); background: color-mix(in srgb, var(--bg) 82%, transparent); padding: 6px 10px; border-radius: 4px; pointer-events: none; }
-.t-ctl { display: grid; gap: 22px; min-width: 0; }
-.picks { display: flex; flex-wrap: wrap; gap: 8px; }
-.pick { width: 64px; height: 64px; padding: 4px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); cursor: pointer; }
-.pick img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.pick[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-.rng { display: grid; grid-template-columns: 90px minmax(0, 1fr); align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.rng input { width: 100%; accent-color: var(--accent); }
-.btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
-.btnrow .btn { cursor: pointer; font-family: inherit; }
-.upl { cursor: pointer; }
-.fit { display: grid; gap: 10px; padding-top: 18px; border-top: 1px dashed var(--line); }
-.fit-row { display: flex; gap: 10px; flex-wrap: wrap; }
-.fit-row label { display: grid; gap: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.fit-row input { width: 110px; padding: 9px 10px; font: inherit; font-size: 14px; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; }
-.fit-out { min-height: 22px; font-size: 14px; }
-.fit-out b { font-family: var(--font-mono); font-size: 18px; color: var(--accent); }
-.t-note { font-size: 12px; color: var(--muted); margin: 0; }
 
 /* Pita gelap Lost Generation */
 .lost { background: var(--band-bg); color: var(--band-fg); border-top: 0; padding-block: 110px; }
@@ -358,7 +332,7 @@ footer { border-top: 1px solid var(--line); padding-top: 20px; font-family: var(
 @keyframes rise { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: none; } }
 @keyframes unredact { to { transform: scaleX(0); } }
 @supports (animation-timeline: view()) {
-  section .eyebrow, .sub, .rack-wrap, .tryon, .gallery, .story > figure, .figure, .cols > div, .steps li, .table-wrap, details, .contact > * {
+  section .eyebrow, .sub, .rack-wrap, .gallery, .story > figure, .figure, .cols > div, .steps li, .table-wrap, details, .contact > * {
     animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 65%;
   }
   section h2 { position: relative; width: fit-content; max-width: 100%; }
@@ -383,7 +357,6 @@ footer { border-top: 1px solid var(--line); padding-top: 20px; font-family: var(
   .rack-scroll { overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
   .rack-in { min-width: 640px; }
   .panel { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-  .tryon { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -414,7 +387,6 @@ body{margin:0}
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
     <nav class="menu" id="menu" aria-label="Navigasi utama">
       <a href="#koleksi">Koleksi</a>
-      <a href="#lost">Lost Generation</a>
       <a href="#detail">Detail</a>
       <a href="#ukuran">Ukuran</a>
       <a href="#pesan">Cara pesan</a>
@@ -457,7 +429,7 @@ body{margin:0}
     <section id="koleksi">
       <p class="eyebrow">Koleksi</p>
       <h2>Rak kaos</h2>
-      <p class="sub">Klik baju di rak untuk melihat detailnya. Ganti warna, putar ke belakang, pilih ukuran, lalu pesan lewat WhatsApp.</p>
+      <p class="sub">Klik baju di rak untuk melihat detailnya, klik dua kali untuk melihat bagian belakangnya. Ganti warna, pilih ukuran, lalu pesan lewat WhatsApp.</p>
       <div class="rack-wrap">
         <div class="rack-scroll"><div class="rack-in"><div class="rail" aria-hidden="true"></div><ul class="rack" id="rack"></ul></div></div>
         <div class="floor" aria-hidden="true"></div>
@@ -465,23 +437,6 @@ body{margin:0}
       <div class="panel" id="panel" aria-live="polite"></div>
     </section>
   </div>
-
-  <section id="lost" class="lost" data-torn="10">
-    <div class="wrap">
-      <p class="eyebrow">Lost Generation</p>
-      <h2 class="mega">Lost<br>Generation</h2>
-      <div class="story">
-        <figure><img src="img/lost-art.jpg" alt="Ilustrasi Lost Generation: anak duduk bertopang dagu dengan papan petunjuk Dream, Work, Happiness, Future" loading="lazy"></figure>
-        <div>
-          <blockquote class="words">Born with big dreams, growing up in a system that only teaches us to work. Not to live.</blockquote>
-          <p>Tulis cerita koleksi ini dengan kata-katamu: dari mana idenya datang, siapa yang kamu bayangkan memakainya, dan apa yang ingin kamu sampaikan lewat sablonnya.</p>
-          <div class="stack">
-            <img src="img/lost-tees.jpg" alt="Kaos hitam washed Lost Generation tampak depan dan belakang" loading="lazy">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <div class="wrap">
     <section id="dipakai">
@@ -492,49 +447,6 @@ body{margin:0}
         <img src="img/model-pria.jpg" alt="Model pria memakai kaos layered Work Exist Repeat, tampak penuh dan close-up" loading="lazy">
         <figcaption>Model pria memakai Work · Exist · Repeat</figcaption>
       </figure>
-    </section>
-
-    <section id="coba">
-      <p class="eyebrow">Coba pakai</p>
-      <h2>Coba dulu sebelum dibawa kabur</h2>
-      <p class="sub">Unggah fotomu, pilih kaos, lalu geser dan atur ukurannya sampai pas. Fotomu hanya diproses di browser dan tidak dikirim ke mana pun. Ini simulasi tempel, bukan ukuran asli di badan.</p>
-      <div class="tryon">
-        <div>
-          <div class="stage" id="stage">
-            <svg class="sil" id="sil" viewBox="0 0 300 400" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="150" cy="95" r="42"/><path d="M60 400 C60 270 95 215 150 215 C205 215 240 270 240 400"/></svg>
-            <img class="photo" id="tuser" alt="Fotomu" hidden>
-            <img class="tee" id="ttee" alt="Kaos yang sedang dicoba" draggable="false">
-            <div class="hint" id="thint">Seret kaos untuk memindahkan. Cubit atau gulir untuk mengubah ukuran.</div>
-          </div>
-        </div>
-        <div class="t-ctl">
-          <div class="btnrow">
-            <label class="btn primary upl" for="tfile">Unggah foto</label>
-            <input id="tfile" type="file" accept="image/*" hidden>
-            <button class="btn" type="button" id="tclear" hidden>Hapus foto</button>
-          </div>
-          <div class="opt"><span class="opt-label">Kaos</span><div class="picks" id="tpick"></div></div>
-          <div class="opt"><span class="opt-label">Tampak</span><div class="seg" id="tside"><button type="button" data-side="front" aria-pressed="true">Depan</button><button type="button" data-side="back" aria-pressed="false">Belakang</button></div></div>
-          <div class="opt">
-            <label class="rng">Ukuran<input type="range" id="tsize" min="25" max="110" value="60"></label>
-            <label class="rng">Putar<input type="range" id="trot" min="-30" max="30" value="0"></label>
-          </div>
-          <div class="btnrow">
-            <button class="btn" type="button" id="treset">Reset posisi</button>
-            <button class="btn" type="button" id="tsave">Simpan gambar</button>
-            <button class="btn primary" type="button" id="tbuy">Pesan kaos ini</button>
-          </div>
-          <p class="t-note" id="tmsg" role="status"></p>
-          <div class="fit">
-            <span class="opt-label">Saran ukuran</span>
-            <div class="fit-row">
-              <label>Tinggi (cm)<input id="fh" type="number" inputmode="numeric" min="120" max="220" placeholder="170"></label>
-              <label>Berat (kg)<input id="fw" type="number" inputmode="numeric" min="30" max="150" placeholder="65"></label>
-            </div>
-            <div class="fit-out" id="fout" aria-live="polite">Isi berat badan untuk melihat saran ukuran.</div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <section id="detail">
@@ -762,6 +674,14 @@ body{margin:0}
     var b = e.target.closest(".rk-btn");
     if (b) selectItem(+b.dataset.i);
   });
+  rackEl.addEventListener("dblclick", function (e) {
+    var b = e.target.closest(".rk-btn");
+    if (!b) return;
+    var i = +b.dataset.i;
+    if (i !== state.sel) selectItem(i);
+    state.side = state.side === "back" ? "front" : "back";
+    flip(i); renderPanel();
+  });
   panelEl.addEventListener("click", function (e) {
     var t;
     if ((t = e.target.closest(".swatch"))) {
@@ -787,122 +707,6 @@ body{margin:0}
     if (e.target.closest("[data-zoom-btn]")) openLb(fullSrc(curColor(state.sel), state.side), PRODUCTS[state.sel].name);
   });
   renderPanel();
-
-  /* Coba pakai */
-  (function () {
-    var stage = document.getElementById("stage"), tee = document.getElementById("ttee"), user = document.getElementById("tuser");
-    var sil = document.getElementById("sil"), hintEl = document.getElementById("thint"), msg = document.getElementById("tmsg");
-    var pickEl = document.getElementById("tpick"), sizeR = document.getElementById("tsize"), rotR = document.getElementById("trot");
-    var T = { x: 0.5, y: 0.55, w: 0.6, r: 0, side: "front", item: null, ratio: 0.75, hasPhoto: false };
-    var items = [];
-    PRODUCTS.forEach(function (p, pi) { p.colors.forEach(function (c, ci) { items.push({ pi: pi, ci: ci, name: fullName(p, c), key: c.key }); }); });
-    T.item = items[0];
-    function src(it, side) { return "img/try/" + it.key + "-" + side + ".webp"; }
-    items.forEach(function (it, k) {
-      var b = document.createElement("button");
-      b.type = "button"; b.className = "pick"; b.setAttribute("aria-label", it.name); b.title = it.name;
-      b.innerHTML = '<img alt="" src="' + src(it, "front") + '">';
-      b.addEventListener("click", function () { T.item = it; draw(); });
-      pickEl.appendChild(b);
-    });
-    function draw() {
-      tee.src = src(T.item, T.side);
-      tee.alt = T.item.name + (T.side === "back" ? ", tampak belakang" : ", tampak depan");
-      tee.style.left = (T.x * 100) + "%"; tee.style.top = (T.y * 100) + "%"; tee.style.width = (T.w * 100) + "%";
-      tee.style.transform = "translate(-50%,-50%) rotate(" + T.r + "deg)";
-      Array.prototype.forEach.call(pickEl.children, function (b, k) { b.setAttribute("aria-pressed", items[k] === T.item); });
-      Array.prototype.forEach.call(document.querySelectorAll("#tside button"), function (b) { b.setAttribute("aria-pressed", b.dataset.side === T.side); });
-      sizeR.value = Math.round(T.w * 100); rotR.value = Math.round(T.r);
-    }
-    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-    /* geser, cubit, gulir */
-    var ptrs = {}, last = null;
-    function two() { var k = Object.keys(ptrs); return k.length === 2 ? [ptrs[k[0]], ptrs[k[1]]] : null; }
-    tee.addEventListener("pointerdown", function (e) {
-      tee.setPointerCapture(e.pointerId); ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
-      var d = two(); last = d ? { dist: Math.hypot(d[0].x - d[1].x, d[0].y - d[1].y), ang: Math.atan2(d[1].y - d[0].y, d[1].x - d[0].x) } : null;
-    });
-    tee.addEventListener("pointermove", function (e) {
-      var p = ptrs[e.pointerId]; if (!p) return;
-      var rect = stage.getBoundingClientRect(), prev = { x: p.x, y: p.y };
-      p.x = e.clientX; p.y = e.clientY;
-      var d = two();
-      if (d) {
-        var dist = Math.hypot(d[0].x - d[1].x, d[0].y - d[1].y), ang = Math.atan2(d[1].y - d[0].y, d[1].x - d[0].x);
-        if (last) { T.w = clamp(T.w * dist / last.dist, 0.25, 1.1); T.r = clamp(T.r + (ang - last.ang) * 180 / Math.PI, -30, 30); }
-        last = { dist: dist, ang: ang };
-      } else {
-        T.x = clamp(T.x + (p.x - prev.x) / rect.width, -0.1, 1.1);
-        T.y = clamp(T.y + (p.y - prev.y) / rect.height, -0.1, 1.1);
-      }
-      draw();
-    });
-    function up(e) { delete ptrs[e.pointerId]; last = null; }
-    tee.addEventListener("pointerup", up); tee.addEventListener("pointercancel", up);
-    stage.addEventListener("wheel", function (e) { e.preventDefault(); T.w = clamp(T.w * Math.exp(-e.deltaY * 0.0012), 0.25, 1.1); draw(); }, { passive: false });
-    sizeR.addEventListener("input", function () { T.w = sizeR.value / 100; draw(); });
-    rotR.addEventListener("input", function () { T.r = +rotR.value; draw(); });
-    document.getElementById("tside").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) { T.side = b.dataset.side; draw(); } });
-    document.getElementById("treset").addEventListener("click", function () { T.x = 0.5; T.y = 0.55; T.w = 0.6; T.r = 0; draw(); });
-    /* foto pengguna */
-    var fileIn = document.getElementById("tfile"), clr = document.getElementById("tclear"), objUrl = null;
-    function setRatio(r) { T.ratio = r; stage.style.aspectRatio = String(r); }
-    fileIn.addEventListener("change", function () {
-      var f = fileIn.files && fileIn.files[0]; if (!f) return;
-      if (objUrl) URL.revokeObjectURL(objUrl);
-      objUrl = URL.createObjectURL(f);
-      user.onload = function () {
-        setRatio(clamp(user.naturalWidth / user.naturalHeight, 0.6, 1.2));
-        user.hidden = false; sil.style.display = "none"; T.hasPhoto = true; clr.hidden = false;
-        hintEl.textContent = "Seret kaos ke badanmu, lalu atur ukurannya.";
-        msg.textContent = "";
-      };
-      user.onerror = function () { msg.textContent = "Foto tidak bisa dibaca. Coba format JPG atau PNG."; };
-      user.src = objUrl;
-    });
-    clr.addEventListener("click", function () {
-      user.hidden = true; user.removeAttribute("src"); sil.style.display = ""; T.hasPhoto = false; clr.hidden = true; fileIn.value = "";
-      setRatio(0.75); hintEl.textContent = "Seret kaos untuk memindahkan. Cubit atau gulir untuk mengubah ukuran.";
-    });
-    /* simpan gambar */
-    document.getElementById("tsave").addEventListener("click", function () {
-      try {
-        var W = 1000, H = Math.round(W / T.ratio), cv = document.createElement("canvas"); cv.width = W; cv.height = H;
-        var g = cv.getContext("2d"); g.fillStyle = getComputedStyle(stage).backgroundColor || "#ddd"; g.fillRect(0, 0, W, H);
-        if (T.hasPhoto) {
-          var s = Math.max(W / user.naturalWidth, H / user.naturalHeight), dw = user.naturalWidth * s, dh = user.naturalHeight * s;
-          g.drawImage(user, (W - dw) / 2, (H - dh) / 2, dw, dh);
-        }
-        var tw = T.w * W, th = tw * tee.naturalHeight / tee.naturalWidth;
-        g.save(); g.translate(T.x * W, T.y * H); g.rotate(T.r * Math.PI / 180); g.drawImage(tee, -tw / 2, -th / 2, tw, th); g.restore();
-        cv.toBlob(function (b) {
-          if (!b) { msg.textContent = "Gambar tidak bisa disimpan di sini. Coba screenshot saja."; return; }
-          var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "coba-office-prison.png";
-          document.body.appendChild(a); a.click(); a.remove(); msg.textContent = "Gambar disimpan. Kalau tidak muncul, ambil screenshot saja.";
-        }, "image/png");
-      } catch (err) { msg.textContent = "Gambar tidak bisa disimpan di sini. Coba screenshot saja."; }
-    });
-    /* pesan kaos ini */
-    document.getElementById("tbuy").addEventListener("click", function () {
-      var it = T.item;
-      if (it.pi !== state.sel) selectItem(it.pi);
-      state.col[it.pi] = it.ci; setGar(it.pi, false); renderPanel();
-      document.getElementById("koleksi").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    /* saran ukuran */
-    var fh = document.getElementById("fh"), fw = document.getElementById("fw"), fout = document.getElementById("fout");
-    function fit() {
-      var w = +fw.value, h = +fh.value;
-      if (!w) { fout.textContent = "Isi berat badan untuk melihat saran ukuran."; return; }
-      var k = w <= 55 ? 0 : w <= 65 ? 1 : w <= 75 ? 2 : w <= 85 ? 3 : 4;
-      if (h >= 178 && k < 3) k++;
-      if (k > 3) { fout.textContent = "Badanmu di atas ukuran tabel kami. Tanya lewat WhatsApp, kami bantu carikan."; return; }
-      var s = SIZES[k], tight = k > 0 ? SIZES[k - 1] : null, loose = k < 3 ? SIZES[k + 1] : null;
-      fout.innerHTML = "Saran: <b>" + s + "</b>" + (tight ? ". Mau lebih pas di badan? Coba " + tight + "." : ".") + (loose ? " Mau lebih longgar? Coba " + loose + "." : "");
-    }
-    fh.addEventListener("input", fit); fw.addEventListener("input", fit);
-    draw();
-  })();
 
   /* Tepi sobek */
   function tornPoly(amp, seed) {
