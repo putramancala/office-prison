@@ -234,7 +234,7 @@ h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 
 .swatch:hover { box-shadow: 0 0 0 1px var(--muted); }
 .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
 .seg-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.seg, .seg2 { display: inline-flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.seg, .seg2 { justify-self: start; width: fit-content; display: inline-flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
 .seg button, .seg2 button { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; border: 0; background: transparent; color: var(--muted); padding: 5px 14px; border-radius: 999px; cursor: pointer; }
 .seg button[aria-pressed="true"], .seg2 button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
 .linkbtn { font-family: var(--font-body); font-size: 13px; background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; }
@@ -387,7 +387,7 @@ body{margin:0}
 
 <header class="top">
   <div class="wrap bar">
-    <a class="brand" href="#atas">OFFICE PRISON<sup>®</sup></a>
+    <a class="brand" href="#atas">OFFICE PRISON</a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
     <nav class="menu" id="menu" aria-label="Navigasi utama">
       <a href="#koleksi">Koleksi</a>
@@ -458,6 +458,8 @@ body{margin:0}
       <h2>Seragam kantormu boleh sama. Gayamu jangan.</h2>
       <p class="sub">Ketuk foto untuk melihatnya lebih besar.</p>
       <div class="gallery">
+        <figure><img src="img/d-sheet-depan.jpg" alt="Kaos Work Exist Repeat tampak depan dengan detail sablon, kerah, dan label" loading="lazy"><figcaption>Tampak depan & detail</figcaption></figure>
+        <figure><img src="img/d-sheet-belakang.jpg" alt="Kaos Work Exist Repeat tampak belakang dengan detail kerah dan lengan" loading="lazy"><figcaption>Tampak belakang & detail</figcaption></figure>
         <figure><img src="img/d-model.jpg" alt="Model pria memakai kaos layered Work Exist Repeat" loading="lazy"><figcaption>Model & kaos</figcaption></figure>
         <figure><img src="img/d-hangtag.jpg" alt="Hang tag Office Prison depan dan belakang dengan tali rami" loading="lazy"><figcaption>Hang tag</figcaption></figure>
         <figure><img src="img/d-label-hem.jpg" alt="Label hem Office Prison berukuran 5 x 2 cm" loading="lazy"><figcaption>Label hem 5 × 2 cm</figcaption></figure>
@@ -513,7 +515,7 @@ body{margin:0}
 
     <section id="brand">
       <p class="eyebrow">Tentang brand</p>
-      <h2>Office Prison®</h2>
+      <h2>Office Prison</h2>
       <p class="sub">Work · Exist · Repeat. Brand ini menggambarkan seseorang yang merasa terjebak dalam rutinitas dan ingin menemukan kebebasannya. Work is a prison, but style is freedom.</p>
       <figure class="figure">
         <img src="img/brand-board.jpg" alt="Papan identitas brand Office Prison: logo, variasi logo, simbol, pilihan tagline, dan arah warna" loading="lazy">
@@ -542,7 +544,7 @@ body{margin:0}
     </section>
 
     <footer>
-      <span>© 2026 OFFICE PRISON®</span>
+      <span>© 2026 OFFICE PRISON</span>
       <span>Work • Exist • Repeat</span>
     </footer>
   </div>
@@ -581,10 +583,10 @@ body{margin:0}
       desc: "Koala lelah di meja kerja depan, logo mahkota di punggung atas.", chips: ["Oversize", "Washed"], sizes: SIZES,
       colors: [{ name: "Washed black", hex: "#2b2b2a", key: "p5" }] },
     { name: "Work \u00b7 Exist \u00b7 Repeat", line: "Office Prison · Layered Tee", price: 179000, status: "ready",
-      desc: "Anjing santai membawa kopi di depan, lengan panjang biru berlapis di bawah kaos krem.", chips: ["Layered", "100% katun"], sizes: SIZES,
-      colors: [{ name: "Krem & biru", hex: "#d7d0c0", hex2: "#3f5b86", key: "p6" }] }
+      desc: "Anjing santai membawa kopi di depan, lengan panjang biru berlapis di bawah kaos putih.", chips: ["Layered", "100% katun"], sizes: SIZES,
+      colors: [{ name: "Putih & biru", hex: "#f1f1ee", hex2: "#3f5b86", key: "p6" }] }
   ];
-  var HX = {"p1-front": 46.9, "p1-back": 49.7, "p2-front": 48.0, "p2-back": 49.6, "p3-front": 49.8, "p3-back": 50.4, "p4-front": 50.3, "p4-back": 50.1, "p5-front": 50.1, "p5-back": 50.1, "p6-front": 49.8, "p6-back": 47.8};
+  var HX = {"p1-front": 46.9, "p1-back": 49.7, "p2-front": 48.0, "p2-back": 49.6, "p3-front": 49.8, "p3-back": 50.4, "p4-front": 50.3, "p4-back": 50.1, "p5-front": 50.1, "p5-back": 50.1, "p6-front":49.5, "p6-back":50};
 
   var rackEl = document.getElementById("rack");
   var panelEl = document.getElementById("panel");
